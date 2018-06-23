@@ -1,9 +1,3 @@
-# Sample script to demonstrate loading a config for a device.
-#
-# Note: this script is as simple as possible: it assumes that you have
-# followed the lab setup in the quickstart tutorial, and so hardcodes
-# the device IP and password.  You should also have the
-# 'new_good.conf' configuration saved to disk.
 from __future__ import print_function
 
 import napalm
@@ -12,8 +6,6 @@ import os
 import json
 
 def main(hostname, username, password, network_driver, optional_args):
-    """Load a config for the device."""
-
     # Use the appropriate network driver to connect to the device:
     driver = napalm.get_network_driver(network_driver)
 
@@ -43,9 +35,13 @@ def main(hostname, username, password, network_driver, optional_args):
     print('Done.')
 
 if __name__ == '__main__':
-#    if len(sys.argv) < 2:
-#        print('Please supply the full path to "new_good.conf"')
-#        sys.exit(1)
-#    config_file = sys.argv[1]
-#    main(config_file)
-    main(hostname='127.0.0.1', username='vagrant', password='vagrant', network_driver='eos', optional_args={'port': 12443})
+    #just static dictionaries of devices containing all needed information, should be filled dynamicaly by napalm functions
+    device_a = {'hostname': '127.0.0.1', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 12443}}
+    device_b = {'hostname': '127.0.0.1', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 12443}}
+    
+    #list of the devices
+    devices_list = [device_a, device_b]
+    
+    #loop which goes through each device in the given list and prints all the keys to json (not finished yet) need to figure it out
+    for device in devices_list:
+        main(hostname=device['hostname'], username=device['username'], password=device['password'], network_driver=device['network_driver'], optional_args=device['optional_args'])
