@@ -26,10 +26,11 @@ def main(hostname, username, password, network_driver, optional_args):
     print('Get LLDP neighbors ...')
     lldp_neighbors = device.get_lldp_neighbors()
 
-    #print(json.dumps(facts))
-    #print(json.dumps(snmp_information))
-    #print(json.dumps(lldp_neighbors))
-    print(json.dumps({facts['hostname']: {'location': snmp_information['location'], 'neighbours': lldp_neighbors}}, indent=4, separators=(',', ': ')))
+    neighbors[hostname] = []
+    neighbors[hostname].append({
+       'snmp_location': snmp_information['location'],
+       'lldp_neighbors': lldp_neighbors
+    }) 
 
     # close the session with the device.
     device.close()
@@ -37,12 +38,17 @@ def main(hostname, username, password, network_driver, optional_args):
 
 if __name__ == '__main__':
     #just static dictionaries of devices containing all needed information, should be filled dynamicaly by napalm functions
-    device_a = {'hostname': '127.0.0.1', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 12443}}
-    device_b = {'hostname': '127.0.0.1', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 12443}}
+    inventory_a = {'hostname': '127.0.0.1', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 12443}}
+    inventory_b = {'hostname': '127.0.0.2', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 12443}}
     
     #list of the devices
-    devices_list = [device_a, device_b]
+    inventory = [inventory_a, inventory_b]
+
+    neighbors = {}
     
     #loop which goes through each device in the given list and prints all the keys to json (not finished yet) need to figure it out
-    for device in devices_list:
+    for device in inventory:
         main(hostname=device['hostname'], username=device['username'], password=device['password'], network_driver=device['network_driver'], optional_args=device['optional_args'])
+
+    with open('/var/tmp/neighbors.json', 'w') as f:
+        f.write(json.dumps(neighbors, indent=4, sort_keys=True))
