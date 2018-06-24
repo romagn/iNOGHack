@@ -1,0 +1,20 @@
+[
+    {
+        "hostname": "127.0.0.1", 
+        "network_driver": "eos", 
+        "optional_args": {
+            "port": 12443
+        }, 
+        "password": "vagrant", 
+        "username": "vagrant"
+    }, 
+    {
+        "hostname": "127.0.0.2", 
+        "network_driver": "eos", 
+        "optional_args": {
+            "port": 22443
+        }, 
+        "password": "vagrant", 
+        "username": "vagrant"
+    }
+]

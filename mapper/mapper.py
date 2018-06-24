@@ -45,16 +45,13 @@ def main(hostname, username, password, network_driver, optional_args):
     print('Done.')
 
 if __name__ == '__main__':
-    #just static dictionaries of devices containing all needed information, should be filled dynamicaly by napalm functions
-    inventory_a = {'hostname': '127.0.0.1', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 12443}}
-    inventory_b = {'hostname': '127.0.0.2', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 22443}}
-    
-    #list of the devices
-    inventory = [inventory_a, inventory_b]
+    # load hosts from inventory
+    with open('inventory.json') as f:
+      inventory = json.load(f)
 
     devices = {}
     
-    #loop which goes through each device in the given list and prints all the keys to json (not finished yet) need to figure it out
+    #loop which goes through each device in the inventory and dumps all neighbor information to json
     for device in inventory:
         main(hostname=device['hostname'], username=device['username'], password=device['password'], network_driver=device['network_driver'], optional_args=device['optional_args'])
 
