@@ -31,7 +31,8 @@ def main(hostname, username, password, network_driver, optional_args):
     for interface in lldp_neighbors.iteritems():
         for neighbor in interface[1]:
            #                 localIf, nbrHostname, nbrIf
-           neighbors.append([interface[0],neighbor['hostname'], neighbor['port']])
+           # neighbors.append([interface[0],neighbor['hostname'], neighbor['port']])
+           neighbors.append({'localIf': interface[0], 'nbrHostname': neighbor['hostname'], 'nbrIf': neighbor['port']})
            
     devices[hostname] = []
     devices[hostname].append({
