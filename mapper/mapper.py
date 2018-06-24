@@ -46,7 +46,7 @@ def main(hostname, username, password, network_driver, optional_args):
 
 if __name__ == '__main__':
     # load hosts from inventory
-    with open('inventory.json') as f:
+    with open('../data/inventory.json') as f:
       inventory = json.load(f)
 
     devices = {}
@@ -55,6 +55,6 @@ if __name__ == '__main__':
     for device in inventory:
         main(hostname=device['hostname'], username=device['username'], password=device['password'], network_driver=device['network_driver'], optional_args=device['optional_args'])
 
-    with open('/var/tmp/neighbors.json', 'w') as f:
+    with open('../data/neighbors.json', 'w') as f:
         # f.write(json.dumps(devices, indent=4, sort_keys=True))
         f.write(json.dumps(devices))
