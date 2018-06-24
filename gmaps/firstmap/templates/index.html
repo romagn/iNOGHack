@@ -23,11 +23,6 @@
     <div id="map"></div>
     <script src="jquery-3.3.1.min.js"></script>
     <script>
-      // var json = $.getJSON("/var/tmp/neighbors.json");
-      $.getJSON("./neighbors.json", function(json) {
-        console.log(json); // this will show the info it in firebug console
-      });
-
       var map;
       function initMap() {
         // Map options
@@ -38,21 +33,32 @@
         // New Map
         map = new google.maps.Map(document.getElementById('map'), options);
 
-        var marker = addMarker({lat: 53.34155, lng: -6.24121});
+        // Load marker input from JSON file
+        var markers = {}
+        $.getJSON("./neighbors.json", function(json) {
+          for (var host in json) {
+            var snmp_location_lat = json[host][0].snmp_location.split(",")[0];
+            var snmp_location_lng = json[host][0].snmp_location.split(",")[1];
+            markers[host] = addMarker({lat: parseFloat(snmp_location_lat), lng: parseFloat(snmp_location_lng)}, host);
+          }
+        });
 
         // Function Add Marker
-        function addMarker(coords){
+        function addMarker(coords, hostname){
             var marker = new google.maps.Marker({
             position:coords,
+            label:hostname,
+            title:hostname,
             map:map
             });
          };
+
         // New info window
         var infowindow = new google.maps.InfoWindow({
              content:"Hello World!"
             });
 
-         infowindow.open(map,marker);
+        infowindow.open(map);
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlsQ9LZy3aRUOGxS-vTg46fUVbPqmTQds&callback=initMap"
