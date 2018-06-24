@@ -26,10 +26,17 @@ def main(hostname, username, password, network_driver, optional_args):
     print('Get LLDP neighbors ...')
     lldp_neighbors = device.get_lldp_neighbors()
 
-    neighbors[hostname] = []
-    neighbors[hostname].append({
+    neighbors = []
+
+    for interface in lldp_neighbors.iteritems():
+        for neighbor in interface[1]:
+           #                 localIf, nbrHostname, nbrIf
+           neighbors.append([interface[0],neighbor['hostname'], neighbor['port']])
+           
+    devices[hostname] = []
+    devices[hostname].append({
        'snmp_location': snmp_information['location'],
-       'lldp_neighbors': lldp_neighbors
+       'lldp_neighbors': neighbors
     }) 
 
     # close the session with the device.
@@ -44,11 +51,11 @@ if __name__ == '__main__':
     #list of the devices
     inventory = [inventory_a, inventory_b]
 
-    neighbors = {}
+    devices = {}
     
     #loop which goes through each device in the given list and prints all the keys to json (not finished yet) need to figure it out
     for device in inventory:
         main(hostname=device['hostname'], username=device['username'], password=device['password'], network_driver=device['network_driver'], optional_args=device['optional_args'])
 
     with open('/var/tmp/neighbors.json', 'w') as f:
-        f.write(json.dumps(neighbors, indent=4, sort_keys=True))
+        f.write(json.dumps(devices, indent=4, sort_keys=True))
