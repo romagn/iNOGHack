@@ -11,9 +11,20 @@ def parse_args():
 
 
 def main():
-    args = parse_args()
-    driver = napalm.get_network_driver(args.os)
+    # load hosts from inventory (required for credentials)
+    with open('../data/inventory.json') as f:
+      inventory = json.load(f)
+   
+    # load neighbors (required for polling)
+    with open('../data/neighbors.json') as f:
+      neighbors = json.load(f)
+
     if_data = {}
+
+    for device in neighbors:
+        username=inventory[device][]
+        password=device['password'], network_driver=device['network_driver'], optional_args=device['optional_args'])
+
     with driver(hostname=args.device, password='123', username='root') as d:
         for interface, data in dev.get_interfaces().iter():
             if_data[interface] = int(data['is_up'])

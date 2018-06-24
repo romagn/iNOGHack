@@ -16,8 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from firstmap.views import HomeView
+from firstmap.views import JSView
+from firstmap.views import JSNBRView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view()),
+    url(r'^jquery-3.3.1.min.js$', JSView.as_view()),
+    url(r'^neighbors.json$', JSNBRView.as_view()),
 ]
