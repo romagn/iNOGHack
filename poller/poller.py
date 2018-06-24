@@ -3,6 +3,13 @@ import argparse
 import time
 
 
+def parse_args():
+    p = argparse.ArgumentParser('simple poller')
+    p.add_argument('-d', '--device', help='device to poll')
+    p.add_argument('-o', '--os', help='os of the device')
+    return p.parse_args()
+
+
 def main():
     args = parse_args()
     driver = napalm.get_network_driver(args.os)
