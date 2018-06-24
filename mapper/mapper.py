@@ -26,9 +26,10 @@ def main(hostname, username, password, network_driver, optional_args):
     print('Get LLDP neighbors ...')
     lldp_neighbors = device.get_lldp_neighbors()
 
-    print(json.dumps(facts))
-    print(json.dumps(snmp_information))
-    print(json.dumps(lldp_neighbors))
+    #print(json.dumps(facts))
+    #print(json.dumps(snmp_information))
+    #print(json.dumps(lldp_neighbors))
+    print(json.dumps({facts['hostname']: {'location': snmp_information['location'], 'neighbours': lldp_neighbors}}, indent=4, separators=(',', ': ')))
 
     # close the session with the device.
     device.close()
