@@ -39,7 +39,7 @@ def main(hostname, username, password, network_driver, optional_args):
 if __name__ == '__main__':
     #just static dictionaries of devices containing all needed information, should be filled dynamicaly by napalm functions
     inventory_a = {'hostname': '127.0.0.1', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 12443}}
-    inventory_b = {'hostname': '127.0.0.2', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 12443}}
+    inventory_b = {'hostname': '127.0.0.2', 'username': 'vagrant', 'password': 'vagrant', 'network_driver': 'eos', 'optional_args': {'port': 22443}}
     
     #list of the devices
     inventory = [inventory_a, inventory_b]
