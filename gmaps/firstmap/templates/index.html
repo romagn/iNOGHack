@@ -43,6 +43,20 @@
           }
         });
 
+        // Add static, fake link for demo
+        var fakeLinkCoordinates = [
+          {lat: parseFloat("52.378253"), lng: parseFloat("4.900729")},
+          {lat: parseFloat("53.341561"), lng: parseFloat("-6.241210")}
+        ];
+
+        var fakeLink = new google.maps.Polyline({
+          path: fakeLinkCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
         // Function Add Marker
         function addMarker(coords, hostname){
             var marker = new google.maps.Marker({
@@ -59,6 +73,8 @@
             });
 
         infowindow.open(map);
+        fakeLink.setMap(map);
+
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlsQ9LZy3aRUOGxS-vTg46fUVbPqmTQds&callback=initMap"
